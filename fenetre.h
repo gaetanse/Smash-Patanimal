@@ -11,6 +11,8 @@ class fenetre
 
         void Fermer();
         sf::RenderWindow &RenderW();
+        float Getlargeur();
+        float Gethauteur();
 
     private:
 

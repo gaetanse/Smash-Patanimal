@@ -3,6 +3,8 @@
 
 #include "librairies.h"
 #include "fenetre.h"
+#include <iostream>
+#include <string>
 
 class jeu
 {
@@ -11,11 +13,17 @@ class jeu
         virtual ~jeu();
 
         void boucle();
+        void creerTexte(int T_Police,sf::Color couleure,std::string Injec_String,sf::Vector2f posi_Text);
+        void affichage();
+        void clavier();
 
     protected:
 
     private:
 
+
+    sf::Font font;
+    std::vector<sf::Text>texts;
     fenetre Window;
     sf::Event event;
     bool fin=false;

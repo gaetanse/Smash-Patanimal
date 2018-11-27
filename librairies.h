@@ -6,12 +6,12 @@
 #include <SFML/System.hpp>
 #include <SFML/Network.hpp>
 
-#include <iostream>
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <math.h>
+#include <iostream>
 #include <string>
 
 #endif

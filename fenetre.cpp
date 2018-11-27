@@ -12,6 +12,9 @@ window.create(sf::VideoMode(largeur_b,hauteur_b),"Projet",sf::Style::Fullscreen)
 
 }
 
+float fenetre::Getlargeur(){return largeur_b;}
+float fenetre::Gethauteur(){return hauteur_b;}
+
 sf::RenderWindow &fenetre::RenderW(){
     return window;
 }
