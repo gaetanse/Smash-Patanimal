@@ -16,6 +16,8 @@ class jeu
         void creerTexte(int T_Police,sf::Color couleure,std::string Injec_String,sf::Vector2f posi_Text);
         void affichage();
         void clavier();
+        void souris();
+        void manette();
 
     protected:
 

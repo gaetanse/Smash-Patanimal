@@ -21,6 +21,14 @@ Window.RenderW().display();
 
 }
 
+void jeu::souris(){
+
+}
+
+void jeu::manette(){
+
+}
+
 void jeu::clavier(){
     if (event.type == sf::Event::KeyPressed){
         if(event.key.code == sf::Keyboard::Escape)
