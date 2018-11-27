@@ -14,3 +14,5 @@ Choses à faire :
 - [x] Clavier  (50%) 
 - [ ] Souris
 - [ ] Manette
+
+![Screenshot](screenshot.png)
