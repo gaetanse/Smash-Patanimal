@@ -2,19 +2,15 @@
 #define FENETRE_H
 
 #include "librairies.h"
+
 class fenetre
 {
     public:
         fenetre();
-        fenetre(fenetre &fenetreDeTest);
         ~fenetre();
 
         void Fermer();
-        float Getlargeur();
-        float Gethauteur();
-        void Setlargeur(float largeur);
-        void Sethauteur(float hauteur);
-        sf::RenderWindow &GetCopieRenderWindow();
+        sf::RenderWindow &RenderW();
 
     private:
 

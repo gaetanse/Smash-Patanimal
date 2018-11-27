@@ -1,16 +1,6 @@
-#include "librairies.h"
-#include "fenetre.h"
+#include "jeu.h"
 
 int main(){
-
-    fenetre Window;
-
-    Window.GetCopieRenderWindow().setFramerateLimit(60);
-
-    while(Window.GetCopieRenderWindow().isOpen()){
-
-
-
-    }
-
+    jeu objet_jeu;
+    return 0;
 }
