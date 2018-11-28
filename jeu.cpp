@@ -98,7 +98,8 @@ void jeu::clavier(){
             ///Lancer la partie
         }
         if(debutDuJeu){
-
+          //  sf::Image test5 = Window.RenderW().capture();
+          //  test5.saveToFile("screenshotGame.png");
         }
     }
 }
