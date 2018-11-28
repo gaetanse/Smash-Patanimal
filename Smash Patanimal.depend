@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1543351453 source:c:\geo\smash patanimal\fenetre.cpp
+1543353260 source:c:\geo\smash patanimal\fenetre.cpp
 	"fenetre.h"
 	"librairies.h"
 
@@ -610,10 +610,11 @@
 1543349072 source:c:\geo\smash patanimal\main.cpp
 	"jeu.h"
 
-1543351898 source:c:\geo\smash patanimal\jeu.cpp
+1543395408 source:c:\geo\smash patanimal\jeu.cpp
 	"jeu.h"
+	"librairies.h"
 
-1543352658 c:\geo\smash patanimal\jeu.h
+1543396547 c:\geo\smash patanimal\jeu.h
 	"librairies.h"
 	"fenetre.h"
 	<iostream>
