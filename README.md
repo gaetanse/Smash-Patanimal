@@ -16,9 +16,6 @@ Choses à faire :
 - [ ] Manette (0%)
 
 Menu :
-
 ![Screenshot](screenshot.png)
-
 En jeu :
-
 ![Screenshot](screenshotGame.png)
