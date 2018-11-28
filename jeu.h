@@ -15,6 +15,7 @@ class jeu
         void boucle();
         void creerTexte(int T_Police,sf::Color couleure,std::string Injec_String,sf::Vector2f posi_Text);
         void creerRectangle(sf::Color couleur,sf::Vector2f position,sf::Vector2f taille,float tailleContour,sf::Color couleurContour);
+        void creerSprite(std::string endroit,sf::Vector2f pos,sf::Vector2f tai);
         void affichage();
         void clavier();
         void souris();
@@ -23,17 +24,18 @@ class jeu
 
     private:
 
-    std::vector<sf::RectangleShape> rectangles;
-    sf::View jeuCamera;
-
-    sf::Texture tileSet1Texture;
-    sf::Sprite tileSet1;
-
-    sf::Font font;
-    std::vector<sf::Text>texts;
     fenetre Window;
+    std::vector<sf::RectangleShape>rectangles;
+    std::vector<sf::Sprite>sprites;
+    std::vector<sf::Text>texts;
+    sf::View jeuCamera;
+    sf::Sprite tileSet1;
+    sf::Texture tileSet1Texture;
+    sf::Texture textureDuSprite;
+    sf::Font font;
     sf::Event event;
     bool fin=false;
+    bool debutDuJeu=false;
 
 };
 
