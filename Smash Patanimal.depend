@@ -610,13 +610,22 @@
 1543349072 source:c:\geo\smash patanimal\main.cpp
 	"jeu.h"
 
-1543396689 source:c:\geo\smash patanimal\jeu.cpp
+1543442839 source:c:\geo\smash patanimal\jeu.cpp
 	"jeu.h"
 	"librairies.h"
+	<stdlib.h>
+	<time.h>
 
-1543423744 c:\geo\smash patanimal\jeu.h
+1543442834 c:\geo\smash patanimal\jeu.h
 	"librairies.h"
 	"fenetre.h"
 	<iostream>
 	<string>
+
+1543438671 c:\geo\smash patanimal\personnage.h
+	<string>
+	"librairies.h"
+
+1543438945 source:c:\geo\smash patanimal\personnage.cpp
+	"personnage.h"
 

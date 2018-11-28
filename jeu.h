@@ -3,6 +3,7 @@
 
 #include "librairies.h"
 #include "fenetre.h"
+//#include "personnage.h"
 #include <iostream>
 #include <string>
 
@@ -21,19 +22,24 @@ class jeu
         void souris();
         void manette();
         void affichage_map();
+        void colision();
 
     private:
 
     fenetre Window;
+
+            sf::SoundBuffer buffer;
+            sf::Sound sound;
     std::vector<sf::RectangleShape>rectangles;
     std::vector<sf::Sprite>sprites;
     std::vector<sf::Text>texts;
+    sf::Texture textureDuSprite;
     sf::View jeuCamera;
     sf::Sprite tileSet1;
     sf::Texture tileSet1Texture;
-    sf::Texture textureDuSprite;
     sf::Font font;
     sf::Event event;
+    sf::Music music;
     bool fin=false;
     bool debutDuJeu=false;
 
