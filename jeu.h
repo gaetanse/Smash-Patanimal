@@ -3,10 +3,12 @@
 
 #include "librairies.h"
 #include "fenetre.h"
-//#include "personnage.h"
 #include <iostream>
 #include <string>
 #include "perso.h"
+#include "nuage.h"
+#include "ia.h"
+#include "soin.h"
 
 class jeu
 {
@@ -26,12 +28,19 @@ class jeu
 
     private:
 
+    sf::Texture texture_soin;
+    sf::Texture texture_nuage;
     fenetre Window;
     sf::SoundBuffer buffer;
     sf::Sound sound;
+    sf::SoundBuffer bufferpas;
+    sf::Sound soundPas;
     std::vector<sf::RectangleShape>rectangles;
     std::vector<sf::Sprite>sprites;
     std::vector<sf::Text>texts;
+    std::vector<nuage>liste_nuages;
+    std::vector<ia>liste_ia;
+    std::vector<soin>liste_soin;
     sf::Texture textureDuSprite;
     sf::View jeuCamera;
     sf::Sprite tileSet1;
@@ -46,6 +55,7 @@ class jeu
     float deltaTime;
     sf::Clock cloack2;
     perso joueur;
+    int vie;
 
 };
 

@@ -21,8 +21,8 @@ unsigned int map_afficher[20][40] = {
                             {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
                             {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
                             {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
-                            {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
-                            {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
+                            {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,6,1,1,1,1,1,1,1,0},
+                            {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,5,5,1,6,1,1,1,1,1,1,0},
                             {2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
                             {3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3}
                             };
@@ -62,8 +62,9 @@ if(debutDuJeu){
     joueur.afficher(Window.RenderW());
 }
 
-for(unsigned int c=0;c<sprites.size();c++)
-    Window.RenderW().draw(sprites.at(c));
+for(int x=0;x<liste_soin.size();x++)
+    Window.RenderW().draw(liste_soin.at(x).getSprite());
+
 Window.RenderW().setView(Window.RenderW().getDefaultView());
 
 for(unsigned int b=0;b<rectangles.size();b++)
@@ -71,6 +72,18 @@ for(unsigned int b=0;b<rectangles.size();b++)
 
 for(unsigned int a=0;a<texts.size();a++)
     Window.RenderW().draw(texts.at(a));
+
+for(unsigned int c=0;c<sprites.size();c++)
+    if(c!=1)
+        Window.RenderW().draw(sprites.at(c));
+    else
+    for(unsigned int d=0;d<vie;d++){
+        sprites.at(1).setPosition(128+64*d,6+16);
+        Window.RenderW().draw(sprites.at(1));
+    }
+
+for(int y=0;y<liste_nuages.size();y++)
+    Window.RenderW().draw(liste_nuages.at(y).getSprite());
 
 Window.RenderW().display();
 
@@ -92,15 +105,35 @@ void jeu::clavier(){
     if (event.type == sf::Event::KeyPressed){
         if(event.key.code == sf::Keyboard::Escape)
             fin=true;
+        if(event.key.code == sf::Keyboard::O)
+            vie-=1;
+        if((event.key.code == sf::Keyboard::Q||event.key.code == sf::Keyboard::D)&&debutDuJeu){
+            soundPas.play();
+            soundPas.setLoop(true);
+        }
         if(event.key.code == sf::Keyboard::Enter&&debutDuJeu==false){
             debutDuJeu=true;
             rectangles.clear();
             texts.clear();
+            vie = 10;
             creerSprite("design/curseur.png",sf::Vector2f(0,0),sf::Vector2f(0.50,0.50));
+            creerSprite("design/vie.png",sf::Vector2f(65+16,6+16),sf::Vector2f(1,1));
+            for(int a=0;a<10;a++){
+                nuage nume1(texture_nuage,(a*64)+128+(a*110));
+                liste_nuages.push_back(nume1);
+            }
+            creerRectangle(sf::Color::Transparent,sf::Vector2f(64,5),sf::Vector2f(Window.Getlargeur()-128,64),3,sf::Color::Black);
+            creerTexte(20,sf::Color::Black,"Enemies restants : 10",sf::Vector2f(Window.Getlargeur()/2.2,Window.Gethauteur()/50));
+            creerTexte(20,sf::Color::Black,"Partie numéro : 0",sf::Vector2f(Window.Getlargeur()/1.5,Window.Gethauteur()/50));
+            creerTexte(20,sf::Color::Black,"Enemies tués : 0",sf::Vector2f(Window.Getlargeur()/1.2,Window.Gethauteur()/50));
             buffer.loadFromFile("audio/choc.ogg");
             sound.setBuffer(buffer);
             sound.play();
         }
+    }
+    else{
+            soundPas.setLoop(false);
+            soundPas.pause();
     }
 }
 
@@ -113,6 +146,21 @@ void jeu::boucle(){
             ///manette
         }
         if(debutDuJeu){
+            for(int y=0;y<liste_nuages.size();y++){
+                liste_nuages.at(y).deplacement(deltaTime,Window.Getlargeur());
+                if(liste_nuages.at(y).test()==1){
+                    soin soin_objet(texture_soin,liste_nuages.at(y).getSprite().getPosition());
+                    liste_soin.push_back(soin_objet);
+                }
+            }
+            for(int g=0;g<liste_soin.size();g++){
+                liste_soin.at(g).deplacement(deltaTime,Window.Gethauteur());
+                if(liste_soin.at(g).marchedessus(joueur.getPos())==1){
+                    liste_soin.erase(liste_soin.begin()+g);
+                    if(vie<10)
+                        vie++;
+                }
+            }
             int pos_x = joueur.getPos().x/32+1;
             int pos_y = joueur.getPos().y/32+2;
             joueur.colisionMethode();
@@ -127,13 +175,16 @@ void jeu::boucle(){
 }
 
 void jeu::creerSprite(std::string endroit,sf::Vector2f pos,sf::Vector2f tai){
-    sf::Sprite spriteCreer;
-    sprites.push_back(spriteCreer);
     textureDuSprite.loadFromFile(endroit);
+    sf::Sprite spriteCreer;
+    spriteCreer.setTexture(textureDuSprite);
     textureDuSprite.setSmooth(true);
-    sprites.at(sprites.size()-1).setTexture(textureDuSprite);
-    sprites.at(sprites.size()-1).setScale(tai);
-    sprites.at(sprites.size()-1).setPosition(pos);
+    spriteCreer.setScale(tai);
+    spriteCreer.setPosition(pos);
+    sprites.push_back(spriteCreer);
+    // sprites.at(sprites.size()-1).setTexture(textureDuSprite);
+    //sprites.at(sprites.size()-1).setScale(tai);
+    //sprites.at(sprites.size()-1).setPosition(pos);
 }
 
 void jeu::creerRectangle(sf::Color couleur,sf::Vector2f position,sf::Vector2f taille,float tailleContour,sf::Color couleurContour){
@@ -150,6 +201,7 @@ void jeu::creerRectangle(sf::Color couleur,sf::Vector2f position,sf::Vector2f ta
 jeu::jeu()
 {
     music.openFromFile("audio/jeu.ogg");
+    music.setVolume(5);
     music.play();
     Window.RenderW().setFramerateLimit(60);
     Window.RenderW().setMouseCursorVisible(false);
@@ -160,6 +212,12 @@ jeu::jeu()
     else
         tileSet1.setTexture(tileSet1Texture);
 
+    texture_soin.loadFromFile("design/soin.png");
+    texture_soin.setSmooth(true);
+    texture_nuage.loadFromFile("design/nuage.png");
+    texture_nuage.setSmooth(true);
+    bufferpas.loadFromFile("audio/objet_tombe.wav");
+    soundPas.setBuffer(bufferpas);
     jeuCamera.reset(sf::FloatRect(0, 0, 1280, 640));
     creerRectangle(sf::Color::Red,sf::Vector2f(0,0),sf::Vector2f(Window.Getlargeur(),64),1,sf::Color::Black);
     creerRectangle(sf::Color::Red,sf::Vector2f(0,Window.Gethauteur()-64),sf::Vector2f(Window.Getlargeur(),64),1,sf::Color::Black);
