@@ -6,6 +6,7 @@
 //#include "personnage.h"
 #include <iostream>
 #include <string>
+#include "perso.h"
 
 class jeu
 {
@@ -22,14 +23,12 @@ class jeu
         void souris();
         void manette();
         void affichage_map();
-        void colision();
 
     private:
 
     fenetre Window;
-
-            sf::SoundBuffer buffer;
-            sf::Sound sound;
+    sf::SoundBuffer buffer;
+    sf::Sound sound;
     std::vector<sf::RectangleShape>rectangles;
     std::vector<sf::Sprite>sprites;
     std::vector<sf::Text>texts;
@@ -42,6 +41,11 @@ class jeu
     sf::Music music;
     bool fin=false;
     bool debutDuJeu=false;
+    float TempsTotal;
+    float f_miseajour;
+    float deltaTime;
+    sf::Clock cloack2;
+    perso joueur;
 
 };
 

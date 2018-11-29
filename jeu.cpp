@@ -1,12 +1,8 @@
 #include "jeu.h"
 #include "librairies.h"
-#include <stdlib.h>
-#include <time.h>
 
 #define TILE_SIZE 32
 #define nbDitems 10
-
-sf::IntRect perso(0, 0, 128, 256);
 
 unsigned int map_afficher[20][40] = {
                             {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
@@ -57,10 +53,14 @@ void jeu::affichage_map(){
 
 void jeu::affichage(){
 
-Window.RenderW().clear(sf::Color(255,120,0));
+Window.RenderW().clear(sf::Color(255,120,0,255));
 
 Window.RenderW().setView(jeuCamera);
 affichage_map();
+
+if(debutDuJeu){
+    joueur.afficher(Window.RenderW());
+}
 
 for(unsigned int c=0;c<sprites.size();c++)
     Window.RenderW().draw(sprites.at(c));
@@ -71,14 +71,6 @@ for(unsigned int b=0;b<rectangles.size();b++)
 
 for(unsigned int a=0;a<texts.size();a++)
     Window.RenderW().draw(texts.at(a));
-
-//for(unsigned int c=0;c<sprites.size();c++)
-  //  Window.RenderW().draw(sprites.at(c));
-
-if(debutDuJeu){
-//    joueur.dessinPerso(Window.RenderW());
-//    joueur.dessin(Window.RenderW());
-}
 
 Window.RenderW().display();
 
@@ -96,15 +88,6 @@ void jeu::manette(){
 
 }
 
-void jeu::colision(){
-int pos_x = sprites.at(1).getPosition().x/32+1;
-int pos_y = sprites.at(1).getPosition().y/32+2;
-//std::cout << pos_y << "/" << pos_x << "/" << map_afficher[pos_y][pos_x] << std::endl;
-if(map_afficher[pos_y][pos_x]==1){
-    sprites.at(1).move(0,32);
-}
-}
-
 void jeu::clavier(){
     if (event.type == sf::Event::KeyPressed){
         if(event.key.code == sf::Keyboard::Escape)
@@ -113,43 +96,39 @@ void jeu::clavier(){
             debutDuJeu=true;
             rectangles.clear();
             texts.clear();
-            int x = rand() % 35 + 2;
-            int y = rand() % 15 + 2;
-            creerSprite("design/curseur.png",sf::Vector2f(0,0),sf::Vector2f(0.55,0.55));
-            creerSprite("design/joueur.png",sf::Vector2f(x*32,y*32),sf::Vector2f(0.0625*2,0.0625*4));
-            sprites.at(1).setTextureRect(perso);
+            creerSprite("design/curseur.png",sf::Vector2f(0,0),sf::Vector2f(0.50,0.50));
             buffer.loadFromFile("audio/choc.ogg");
             sound.setBuffer(buffer);
             sound.play();
-//            joueur.DonnerInfos("design/joueur.png",Window.Getlargeur(),Window.Gethauteur(),100,x,y);
-            //vitesse_air=s_p_joueur.GetSpeed();
-            ///Lancer la partie
-        }
-        if(debutDuJeu){
-          //  sf::Image test5 = Window.RenderW().capture();
-          //  test5.saveToFile("screenshotGame.png");
         }
     }
 }
 
 void jeu::boucle(){
     while(!fin){
+    deltaTime = cloack2.restart().asSeconds();
         while (Window.RenderW().pollEvent(event)){
             clavier();
             souris();
             ///manette
         }
-        if(debutDuJeu)
-            colision();
+        if(debutDuJeu){
+            int pos_x = joueur.getPos().x/32+1;
+            int pos_y = joueur.getPos().y/32+2;
+            joueur.colisionMethode();
+            joueur.update(deltaTime,
+                          map_afficher[pos_y][pos_x],
+                          map_afficher[pos_y+1][pos_x],
+                          map_afficher[pos_y-1][pos_x],
+                          map_afficher[pos_y-1][pos_x-1]);
+        }
         affichage();
     }
 }
 
 void jeu::creerSprite(std::string endroit,sf::Vector2f pos,sf::Vector2f tai){
     sf::Sprite spriteCreer;
-  //  sf::Texture textureCreer;
     sprites.push_back(spriteCreer);
-    //textureDuSprite.push_back(textureCreer);
     textureDuSprite.loadFromFile(endroit);
     textureDuSprite.setSmooth(true);
     sprites.at(sprites.size()-1).setTexture(textureDuSprite);
@@ -181,7 +160,6 @@ jeu::jeu()
     else
         tileSet1.setTexture(tileSet1Texture);
 
-    srand(time(NULL));
     jeuCamera.reset(sf::FloatRect(0, 0, 1280, 640));
     creerRectangle(sf::Color::Red,sf::Vector2f(0,0),sf::Vector2f(Window.Getlargeur(),64),1,sf::Color::Black);
     creerRectangle(sf::Color::Red,sf::Vector2f(0,Window.Gethauteur()-64),sf::Vector2f(Window.Getlargeur(),64),1,sf::Color::Black);
