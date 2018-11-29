@@ -171,6 +171,8 @@ void jeu::boucle(){
                           map_afficher[pos_y-1][pos_x-1]);
         }
         affichage();
+        //sf::Image test = Window.RenderW().capture();
+        //test.saveToFile("screenshotGame.png");
     }
 }
 
