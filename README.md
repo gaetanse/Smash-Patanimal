@@ -5,15 +5,16 @@ Projet pour le Game Off 2018 par itch.io.
 Choses à faire :
 
 - [x] Affichage de la map (100%)
-- [ ] Ia (0%)
-- [x] Colisions (20%)
-- [x] Joueur (30%)
-- [x] Graphique (25%)
-- [x] Audio (25%)
+- [x] Ia (5%)
+- [x] Colisions (50%)
+- [x] Joueur (70%)
+- [x] Graphique (60%)
+- [x] Audio (50%)
 - [x] Menu (80%)
-- [x] Clavier  (50%) 
-- [x] Souris (25%)
+- [x] Clavier  (80%) 
+- [x] Souris (50%)
 - [ ] Manette (0%)
+- [ ] Parties (0%)
 
 Menu :
 ![Screenshot](screenshot.png)
