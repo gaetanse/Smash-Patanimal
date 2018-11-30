@@ -15,6 +15,7 @@ class perso
         void afficher(sf::RenderWindow &window);
         sf::Vector2f getPos();
         void spawn_ale();
+        bool getSaut();
 
     protected:
 

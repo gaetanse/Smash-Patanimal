@@ -126,11 +126,12 @@ void jeu::clavier(){
             rectangles.clear();
             texts.clear();
             vie = 5;
-            textureDuSprite.loadFromFile("design/curseur.png");
-            textureDuSprite.setSmooth(true);
-            creerSprite(textureDuSprite,"design/curseur.png",sf::Vector2f(0,0),sf::Vector2f(0.50,0.50));
+            texture_curseur.loadFromFile("design/curseur.png");
+            texture_curseur.setSmooth(true);
+            creerSprite(texture_curseur,"design/curseur.png",sf::Vector2f(0,0),sf::Vector2f(0.50,0.50));
             textureDuSprite.loadFromFile("design/vie.png");
             creerSprite(textureDuSprite,"design/vie.png",sf::Vector2f(65+16,6+16),sf::Vector2f(1,1));
+            //textureDuSprite.loadFromFile("design/curseur.png");
             numero_partie=0;enemies=0;enemies_kill=0;
             creerRectangle(sf::Color::Transparent,sf::Vector2f(64,5),sf::Vector2f(Window.Getlargeur()-128,64),3,sf::Color::Black);
             creerTexte(20,sf::Color::Black,"Enemies restants : "+std::to_string(enemies),sf::Vector2f(Window.Getlargeur()/2.2,Window.Gethauteur()/50));
@@ -160,6 +161,7 @@ void jeu::demarageF(){
             numero_partie+=1;
             texts.at(1).setString("Partie numéro : "+std::to_string(numero_partie));
             demmarage=false;
+            ene_creer=false;
 }
 
 void jeu::restart(){
@@ -222,7 +224,9 @@ void jeu::boucle(){
                 if(liste_ia.at(y).colisionMethode(deltaTime,map_afficher[pos_y][pos_x-1],
                                                          map_afficher[pos_y-1][pos_x],
                                                          map_afficher[pos_y-1][pos_x-1],
-                                                         joueur.getPos())==1){
+                                                         joueur.getPos(),
+                                                         joueur.getSaut()
+                                                            )==1){
                     vie-=1;
                                                          };
             }

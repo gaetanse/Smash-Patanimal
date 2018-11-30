@@ -13,7 +13,6 @@ if(personnage.x-sprite.getPosition().x>0&&personnage.x-sprite.getPosition().x<11
         return 1;
     }
 }
-std::cout << personnage.x-sprite.getPosition().x << std::endl;
 }
 
 sf::Vector2f soin::getPos(){

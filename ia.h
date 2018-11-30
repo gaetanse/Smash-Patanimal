@@ -12,7 +12,7 @@ class ia
         void deplacement(float temps,float tailleEcran);
         void afficher(sf::RenderWindow &window);
         sf::Sprite getSprite();
-        int colisionMethode(float temps,int block_dessous,int dro,int gau,sf::Vector2f joueur);
+        int colisionMethode(float temps,int block_dessous,int dro,int gau,sf::Vector2f joueur,bool saut);
         sf::Vector2f getPos();
 
     private:

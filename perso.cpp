@@ -98,9 +98,11 @@ if(peut_sauter==false){
 sprite.move(mouvements);
 }
 
+bool perso::getSaut(){return peut_sauter;}
+
 void perso::spawn_ale(){
-    int x = rand() % 35 + 2;
-    int y = 15;
+    int x = rand() % 30 + 5;
+    int y = 14;
     sprite.setPosition(sf::Vector2f(x*32,y*32));
 }
 

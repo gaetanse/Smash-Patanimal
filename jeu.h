@@ -33,6 +33,7 @@ class jeu
     int numero_partie;
     sf::Texture texture_soin;
     sf::Texture texture_nuage;
+    sf::Texture texture_curseur;
     fenetre Window;
     sf::SoundBuffer buffer;
     sf::Sound sound;
