@@ -65,13 +65,17 @@ if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q)||sf::Keyboard::isKeyPressed(sf::K
     sprite.setTextureRect(perso_anim);
 }
 if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q)){
-    sprite.setScale(-0.0625*2*2*2,0.0625*4*2*2);
-    if(block_droite==1)
+    //sprite.setScale(-0.0625*2*2*2,0.0625*4*2*2);
+    //sprite.setRotation(180);
+    sprite.setTextureRect(sf::IntRect(32, 0, -32, 64));
+    if(block_gauche==1)
         mouvements.x -= speed * deltaTime;
 }
 else if(sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
-    sprite.setScale(0.0625*2*2*2,0.0625*4*2*2);
-    if(block_gauche==1)
+    //sprite.setScale(0.0625*2*2*2,0.0625*4*2*2);
+    //sprite.setRotation(0);
+    sprite.setTextureRect(sf::IntRect(0, 0, 32, 64));
+    if(block_droite==1)
         mouvements.x += speed * deltaTime;
 }
 if(sf::Keyboard::isKeyPressed(sf::Keyboard::Space)){
@@ -94,6 +98,12 @@ if(peut_sauter==false){
 sprite.move(mouvements);
 }
 
+void perso::spawn_ale(){
+    int x = rand() % 35 + 2;
+    int y = 15;
+    sprite.setPosition(sf::Vector2f(x*32,y*32));
+}
+
 perso::perso()
 {
     peut_sauter=false;
@@ -101,12 +111,10 @@ perso::perso()
     perso_anim.width=32;
     perso_anim.height=64;
     srand(time(NULL));
-    int x = rand() % 35 + 2;
-    int y = rand() % 15 + 2;
     texture.loadFromFile("design/joueur.png");
     texture.setSmooth(true);
     sprite.setTexture(texture);
-    sprite.setPosition(sf::Vector2f(x*32,y*32));
+    spawn_ale();
     sprite.setScale(sf::Vector2f(0.0625*2*2*2,0.0625*4*2*2));
     speed=100;
     sprite.setTextureRect(perso_anim);

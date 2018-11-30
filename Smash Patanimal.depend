@@ -610,11 +610,13 @@
 1543349072 source:c:\geo\smash patanimal\main.cpp
 	"jeu.h"
 
-1543507083 source:c:\geo\smash patanimal\jeu.cpp
+1543574108 source:c:\geo\smash patanimal\jeu.cpp
 	"jeu.h"
 	"librairies.h"
+	<iostream>
+	<string>
 
-1543501451 c:\geo\smash patanimal\jeu.h
+1543574978 c:\geo\smash patanimal\jeu.h
 	"librairies.h"
 	"fenetre.h"
 	<iostream>
@@ -631,10 +633,10 @@
 1543438945 source:c:\geo\smash patanimal\personnage.cpp
 	"personnage.h"
 
-1543484882 c:\geo\smash patanimal\perso.h
+1543566280 c:\geo\smash patanimal\perso.h
 	"librairies.h"
 
-1543498499 source:c:\geo\smash patanimal\perso.cpp
+1543566281 source:c:\geo\smash patanimal\perso.cpp
 	"perso.h"
 	"librairies.h"
 	<stdlib.h>
@@ -648,17 +650,17 @@
 	<stdlib.h>
 	<time.h>
 
-1543499264 c:\geo\smash patanimal\ia.h
+1543570920 c:\geo\smash patanimal\ia.h
 	"librairies.h"
 
-1543499782 source:c:\geo\smash patanimal\ia.cpp
+1543572943 source:c:\geo\smash patanimal\ia.cpp
 	"ia.h"
 	<stdlib.h>
 	<time.h>
 
-1543506315 c:\geo\smash patanimal\soin.h
+1543572220 c:\geo\smash patanimal\soin.h
 	"librairies.h"
 
-1543506695 source:c:\geo\smash patanimal\soin.cpp
+1543572521 source:c:\geo\smash patanimal\soin.cpp
 	"soin.h"
 

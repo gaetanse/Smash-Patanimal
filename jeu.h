@@ -19,15 +19,18 @@ class jeu
         void boucle();
         void creerTexte(int T_Police,sf::Color couleure,std::string Injec_String,sf::Vector2f posi_Text);
         void creerRectangle(sf::Color couleur,sf::Vector2f position,sf::Vector2f taille,float tailleContour,sf::Color couleurContour);
-        void creerSprite(std::string endroit,sf::Vector2f pos,sf::Vector2f tai);
+        void creerSprite(sf::Texture &textureDuSprite,std::string endroit,sf::Vector2f pos,sf::Vector2f tai);
         void affichage();
         void clavier();
         void souris();
         void manette();
         void affichage_map();
+        void restart();
+        void demarageF();
 
     private:
 
+    int numero_partie;
     sf::Texture texture_soin;
     sf::Texture texture_nuage;
     fenetre Window;
@@ -54,9 +57,18 @@ class jeu
     float f_miseajour;
     float deltaTime;
     sf::Clock cloack2;
+    bool demmarage=true;
+    float deltaTimeDem;
+    sf::Clock cloackDem;
+    float deltaTimeSpa;
+    sf::Clock cloackSpa;
     perso joueur;
     int vie;
-
+    int enemies;
+    int enemies_kill;
+    bool ene_creer=false;
+    sf::Texture texture_ia;
+    bool perdu=false;
 };
 
 #endif // JEU_H
