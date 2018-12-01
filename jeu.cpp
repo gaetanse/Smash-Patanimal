@@ -57,7 +57,10 @@ void jeu::affichage_map(){
 
 void jeu::affichage(){
 
-Window.RenderW().clear(sf::Color(255,120,0,255));
+if(debutDuJeu==false)
+    Window.RenderW().clear(sf::Color(255,120,0,255));
+else
+    Window.RenderW().clear(sf::Color(255,0,0,255));
 
 Window.RenderW().setView(jeuCamera);
 affichage_map();
@@ -147,6 +150,11 @@ void jeu::clavier(){
     if (event.type == sf::Event::KeyPressed){
         if(event.key.code == sf::Keyboard::Escape)
             fin=true;
+        if(event.key.code == sf::Keyboard::E){
+            sf::Image test = Window.RenderW().capture();
+            test.saveToFile("screenshotGame.png");
+        }
+
         if((event.key.code == sf::Keyboard::Q||event.key.code == sf::Keyboard::D)&&debutDuJeu){
             soundPas.play();
             soundPas.setLoop(true);
