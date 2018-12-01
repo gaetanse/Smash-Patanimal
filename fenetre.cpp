@@ -4,7 +4,7 @@
 fenetre::fenetre()
 {
 
-std::cout << "C:fenetre/";
+//std::cout << "C:fenetre/";
 sf::VideoMode bureau;
 largeur_b = bureau.getDesktopMode().width;
 hauteur_b = bureau.getDesktopMode().height;
@@ -26,5 +26,5 @@ void fenetre::Fermer(){
 fenetre::~fenetre()
 {
     Fermer();
-    std::cout << "D:fenetre/";
+    //std::cout << "D:fenetre/";
 }

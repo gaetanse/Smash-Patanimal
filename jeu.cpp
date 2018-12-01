@@ -410,7 +410,7 @@ void jeu::boucle(){
                 int pos_x = liste_soin.at(g).getPos().x/32+1;
                 int pos_y = liste_soin.at(g).getPos().y/32+2;
                 liste_soin.at(g).colisionMethode(deltaTime,map_afficher[pos_y-1][pos_x-1]);
-                std::cout << g;
+                //std::cout << g;
                 if(liste_soin.at(g).marchedessus(joueur.getPos())==1){
                     liste_soin.erase(liste_soin.begin()+g);
                     if(vie<10)
@@ -471,10 +471,8 @@ jeu::jeu()
     Window.RenderW().setFramerateLimit(60);
     Window.RenderW().setMouseCursorVisible(false);
     font.loadFromFile("font/base.ttf");
-       if(!tileSet1Texture.loadFromFile("design/tileset.png"))
-        std::cout << "Erreur durant le chargement de l'image du tileset." << std::endl;
-    else
-        tileSet1.setTexture(tileSet1Texture);
+    tileSet1Texture.loadFromFile("design/tileset.png");
+    tileSet1.setTexture(tileSet1Texture);
     srand(time(NULL));
     texture_soin.loadFromFile("design/soin.png");
     texture_soin.setSmooth(true);

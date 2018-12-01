@@ -100,7 +100,7 @@ block_droite=dro;
 block_gauche=gau;
 if(sf::Joystick::isConnected(0)){
     int x = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
-    std::cout << "/" << x << std::endl;
+    //std::cout << "/" << x << std::endl;
     if(x>0){
         sens=true;
     sprite.setTextureRect(sf::IntRect(0, 0, 32, 64));
