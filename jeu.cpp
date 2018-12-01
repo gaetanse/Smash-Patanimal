@@ -75,7 +75,8 @@ for(int x=0;x<liste_soin.size();x++)
 for(int t=0;t<liste_ia.size();t++)
     Window.RenderW().draw(liste_ia.at(t).getSprite());
 
-Window.RenderW().draw(sprites.at(1));
+if(click)
+    Window.RenderW().draw(sprites.at(1));
 
 }
 
@@ -272,7 +273,10 @@ void jeu::boucle(){
     if(enemies<1){
         continu();
     }
+    if(sf::Mouse::isButtonPressed(sf::Mouse::Left)==false&&sf::Joystick::isButtonPressed(0, 2)==false)
+        click=false;
     if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+            click=true;
                     sprites.at(1).rotate(20);
                 }
                 /*else{
@@ -280,8 +284,11 @@ void jeu::boucle(){
                 }*/
 
            if(sf::Joystick::isConnected(0)){
-                if(sf::Joystick::isButtonPressed(0, 7))
+                if(sf::Joystick::isButtonPressed(0, 2)){
+                    click=true;
                     sprites.at(1).rotate(20);
+                }
+
                // else
                     //sprites.at(1).setRotation(0);
             }
@@ -310,7 +317,7 @@ void jeu::boucle(){
 
                                                          }
 
-                                    if((sf::Joystick::isConnected(0)&&sf::Joystick::isButtonPressed(0, 1))||sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+                                    if((sf::Joystick::isConnected(0)&&sf::Joystick::isButtonPressed(0, 2))||sf::Mouse::isButtonPressed(sf::Mouse::Left)){
                                       //  if(){
                                             if(joueur.attaque(liste_ia.at(y).getPos(),1)==1){
                         liste_ia.erase(liste_ia.begin()+y);

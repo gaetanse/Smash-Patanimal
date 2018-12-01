@@ -31,6 +31,7 @@ class jeu
 
     private:
 
+    bool click=false;
     int vitesse=0;
     int numero_partie;
     sf::Texture texture_soin;

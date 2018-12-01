@@ -50,7 +50,7 @@ if(sprite.getPosition().y-joueur.y>-64&&sprite.getPosition().y-joueur.y<64){
         }
     }
 }
-//std::cout << "/" << joueur.x << "/" << sprite.getPosition().x << "/" << sprite.getPosition().y-joueur.x << "/" << std::endl;
+std::cout << "/" << joueur.x << "/" << sprite.getPosition().x << "/" << sprite.getPosition().y-joueur.x << "/" << std::endl;
 }
 
 void ia::deplacement(float temps,float tailleEcran){
