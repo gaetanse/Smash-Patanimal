@@ -24,12 +24,12 @@ Jouer à la manette :
 
 Jouer au clavier && souris :
 
-A : Déplacer à gauche
-Q : Déplacer à droite
-Espace : Sauter
-Entrer : Démarrer
-Echap : Quitter
-Click gauche : Attaquer
+- A : Déplacer à gauche
+- Q : Déplacer à droite
+- Espace : Sauter
+- Entrer : Démarrer
+- Echap : Quitter
+- Click gauche : Attaquer
 
 Menu :
 
