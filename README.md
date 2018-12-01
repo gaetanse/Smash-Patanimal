@@ -4,6 +4,8 @@ Projet pour le Game Off 2018 par itch.io.
 
 Jeu créer en environ 900 lignes de codes.
 
+Ia : facile / moyen / dur
+
 Choses à faire :
 
 - [x] Affichage de la map (100%)
@@ -30,10 +32,6 @@ Jouer au clavier && souris :
 - Entrer : Démarrer
 - Echap : Quitter
 - Click gauche : Attaquer
-
-Menu :
-
-![Screenshot](screenshot.png)
 
 En jeu :
 
