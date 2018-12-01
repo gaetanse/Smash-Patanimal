@@ -22,7 +22,7 @@ if(sprite.getPosition().y-enemie.y>0&&sprite.getPosition().y-enemie.y<64){
         }
     }
 }
-//std::cout << "/" << enemie.y << "/" << sprite.getPosition().y << "/" << enemie.x-sprite.getPosition().y << "/" << std::endl;
+return 999;
 }
 
 void perso::colisionMethode(){
@@ -47,8 +47,6 @@ if(block_dessous==1){
     tomber(vitesse_air);
 }
 else{
-   /* perso_anim.left=0;
-    sprite.setTextureRect(perso_anim);*/
     peut_sauter=true;
 }
 }
@@ -82,16 +80,6 @@ else
 }
 
 void perso::update(float temps,int dessous,int desx,int dro,int gau){
-//std::cout << sprite.getPosition().x << std::endl;
-/*perso_anim.left = 0;
-sf::Time elapsed1 = clock_besoin.getElapsedTime();
-if(elapsed1.asSeconds()>0.2){
-    if (perso_anim.left > 64)
-        perso_anim.left = 0;
-    else
-        perso_anim.left += 32;
-clock_besoin.restart();
-}*/
 sf::Vector2f mouvements(0,0);
 deltaTime=temps;
 block_dessous=dessous;
@@ -100,7 +88,6 @@ block_droite=dro;
 block_gauche=gau;
 if(sf::Joystick::isConnected(0)){
     int x = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
-    //std::cout << "/" << x << std::endl;
     if(x>0){
         sens=true;
     sprite.setTextureRect(sf::IntRect(0, 0, 32, 64));
@@ -139,7 +126,6 @@ if((sf::Joystick::isConnected(0)&&sf::Joystick::isButtonPressed(0, 0))||sf::Keyb
         mouvements.y = velocity + deltaTime;
     }
 }
-
 if(peut_sauter==false){
     if(velocity<0){
         velocity++;

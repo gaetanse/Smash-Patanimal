@@ -47,8 +47,8 @@ void jeu::affichage_map(){
             if(map_afficher[u][a]!=1){
                int x = ((map_afficher[u][a])%nbDitems)*TILE_SIZE;
                int y = (map_afficher[u][a]/nbDitems)*TILE_SIZE;
-                tileSet1.setPosition(sf::Vector2f(a*TILE_SIZE, u*TILE_SIZE)); ///position
-                tileSet1.setTextureRect(sf::IntRect(x, y, TILE_SIZE, TILE_SIZE)); ///position dans le spriteset et taille
+                tileSet1.setPosition(sf::Vector2f(a*TILE_SIZE, u*TILE_SIZE));
+                tileSet1.setTextureRect(sf::IntRect(x, y, TILE_SIZE, TILE_SIZE));
                 Window.RenderW().draw(tileSet1);
             }
         }
@@ -70,9 +70,9 @@ if(debutDuJeu&&demmarage==false&&perdu==false){
 }
 
 if(demmarage==false&&perdu==false){
-for(int x=0;x<liste_soin.size();x++)
+for(unsigned int x=0;x<liste_soin.size();x++)
     Window.RenderW().draw(liste_soin.at(x).getSprite());
-for(int t=0;t<liste_ia.size();t++)
+for(unsigned int t=0;t<liste_ia.size();t++)
     Window.RenderW().draw(liste_ia.at(t).getSprite());
 
 if(click)
@@ -93,14 +93,14 @@ for(unsigned int c=0;c<sprites.size();c++)
     if(c!=2&&c!=1)
         Window.RenderW().draw(sprites.at(c));
     else
-    for(unsigned int d=0;d<vie;d++){
+    for(int d=0;d<vie;d++){
         sprites.at(2).setPosition(128+64*d,6+16);
         Window.RenderW().draw(sprites.at(2));
     }
 }
 
 if(demmarage==false&&perdu==false){
-for(int y=0;y<liste_nuages.size();y++)
+for(unsigned int y=0;y<liste_nuages.size();y++)
     Window.RenderW().draw(liste_nuages.at(y).getSprite());
 }
 
@@ -123,7 +123,7 @@ void jeu::manette(){
 }
 
 void jeu::clavier(){
-    if(sf::Joystick::isConnected(0)&&sf::Joystick::isButtonPressed(0, 7)&&debutDuJeu==false){
+    if((sf::Joystick::isConnected(0)&&sf::Joystick::isButtonPressed(0, 7)&&debutDuJeu==false)||(event.key.code == sf::Keyboard::Enter&&debutDuJeu==false)){
         debutDuJeu=true;
             rectangles.clear();
             texts.clear();
@@ -140,9 +140,11 @@ void jeu::clavier(){
             creerTexte(20,sf::Color::Black,"Enemies restants : "+std::to_string(enemies),sf::Vector2f(Window.Getlargeur()/2.2,Window.Gethauteur()/50));
             creerTexte(20,sf::Color::Black,"Partie numéro : "+std::to_string(numero_partie),sf::Vector2f(Window.Getlargeur()/1.5,Window.Gethauteur()/50));
             creerTexte(20,sf::Color::Black,"Enemies tués : "+std::to_string(enemies_kill),sf::Vector2f(Window.Getlargeur()/1.2,Window.Gethauteur()/50));
-            //creerRectangle(sf::Color::Transparent,sf::Vector2f(Window.Getlargeur()/2.3,Window.Gethauteur()/2),sf::Vector2f(280,128),3,sf::Color::Black);
-            //creerTexte(20,sf::Color::Black,"Partie numéro :  : 1",sf::Vector2f(Window.Getlargeur()/2.2,Window.Gethauteur()/1.85));
             cloackDem.restart();
+            for(int a=0;a<10;a++){
+                nuage nume1(texture_nuage,(a*64)+128+(a*110));
+                liste_nuages.push_back(nume1);
+            }
     }
     if(sf::Joystick::isConnected(0)&&sf::Joystick::isButtonPressed(0, 6)){
         fin=true;
@@ -176,16 +178,6 @@ void jeu::clavier(){
     if (event.type == sf::Event::KeyPressed){
         if(event.key.code == sf::Keyboard::Escape)
             fin=true;
-        if(event.key.code == sf::Keyboard::E){
-            sf::Image test = Window.RenderW().capture();
-            test.saveToFile("screenshotGame.png");
-        }
-
-        if((event.key.code == sf::Keyboard::Q||event.key.code == sf::Keyboard::D)&&debutDuJeu){
-            soundPas.play();
-            soundPas.setLoop(true);
-        }
-
         if(event.key.code == sf::Keyboard::Q&&debutDuJeu==false){
             num_choix-=1;
             if(num_choix>2)
@@ -214,41 +206,10 @@ void jeu::clavier(){
             else if(num_choix==2)
                 texts.at(1).setString("Ia : Facile | Ia : Moyen | (Ia : Dur)");
         }
-        if(event.key.code == sf::Keyboard::Enter&&debutDuJeu==false){
-            debutDuJeu=true;
-            rectangles.clear();
-            texts.clear();
-            vie = 5;
-            texture_curseur.loadFromFile("design/curseur.png");
-            texture_curseur.setSmooth(true);
-            creerSprite(texture_curseur,"design/curseur.png",sf::Vector2f(0,0),sf::Vector2f(0.50,0.50));
-            creerSprite(texture_epee,"",sf::Vector2f(0,0),sf::Vector2f(0.5,1.5));
-            sprites.at(1).setOrigin(8,32);
-            textureDuSprite.loadFromFile("design/vie.png");
-            creerSprite(textureDuSprite,"design/vie.png",sf::Vector2f(65+16,6+16),sf::Vector2f(1,1));
-            numero_partie=0;enemies=0;enemies_kill=0;
-            creerRectangle(sf::Color::Transparent,sf::Vector2f(64,5),sf::Vector2f(Window.Getlargeur()-128,64),3,sf::Color::Black);
-            creerTexte(20,sf::Color::Black,"Enemies restants : "+std::to_string(enemies),sf::Vector2f(Window.Getlargeur()/2.2,Window.Gethauteur()/50));
-            creerTexte(20,sf::Color::Black,"Partie numéro : "+std::to_string(numero_partie),sf::Vector2f(Window.Getlargeur()/1.5,Window.Gethauteur()/50));
-            creerTexte(20,sf::Color::Black,"Enemies tués : "+std::to_string(enemies_kill),sf::Vector2f(Window.Getlargeur()/1.2,Window.Gethauteur()/50));
-            //creerRectangle(sf::Color::Transparent,sf::Vector2f(Window.Getlargeur()/2.3,Window.Gethauteur()/2),sf::Vector2f(280,128),3,sf::Color::Black);
-            //creerTexte(20,sf::Color::Black,"Partie numéro :  : 1",sf::Vector2f(Window.Getlargeur()/2.2,Window.Gethauteur()/1.85));
-            cloackDem.restart();
-        }
-    }
-    else{
-            soundPas.setLoop(false);
-            soundPas.pause();
     }
 }
 
 void jeu::demarageF(){
-            for(int a=0;a<10;a++){
-                nuage nume1(texture_nuage,(a*64)+128+(a*110));
-                liste_nuages.push_back(nume1);
-            }
-       //     texts.erase(texts.end()+0);
-       //     rectangles.erase(rectangles.end()+0);
             joueur.spawn_ale();
             enemies=5+enemies_kill;
             texts.at(0).setString("Enemies restants : "+std::to_string(enemies));
@@ -259,7 +220,6 @@ void jeu::demarageF(){
 }
 
 void jeu::restart(){
-liste_nuages.clear();
 liste_soin.clear();
 liste_ia.clear();
 enemies=0;
@@ -271,19 +231,15 @@ texts.at(2).setString("Enemies tués : 0");
 cloackDem.restart();
 demmarage=true;
 perdu=false;
-//creerRectangle(sf::Color::Transparent,sf::Vector2f(Window.Getlargeur()/2.3,Window.Gethauteur()/2),sf::Vector2f(280,128),3,sf::Color::Black);
-//creerTexte(20,sf::Color::Black,"Partie numéro :  : 1",sf::Vector2f(Window.Getlargeur()/2.2,Window.Gethauteur()/1.85));
 }
 
 void jeu::continu(){
-liste_nuages.clear();
+//liste_nuages.clear();
 liste_soin.clear();
 liste_ia.clear();
 cloackDem.restart();
 demmarage=true;
 perdu=false;
-//creerRectangle(sf::Color::Transparent,sf::Vector2f(Window.Getlargeur()/2.3,Window.Gethauteur()/2),sf::Vector2f(280,128),3,sf::Color::Black);
-//creerTexte(20,sf::Color::Black,"Partie numéro : "+std::to_string(numero_partie),sf::Vector2f(Window.Getlargeur()/2.2,Window.Gethauteur()/1.85));
 demarageF();
 }
 
@@ -296,7 +252,6 @@ void jeu::boucle(){
         while (Window.RenderW().pollEvent(event)){
             clavier();
             souris();
-            ///manette
         }
         if(debutDuJeu){
 
@@ -316,12 +271,6 @@ void jeu::boucle(){
                 else if(num_choix==2)
                     obtn=1.1;
                 if(deltaTimeSpa>obtn){
-                   /* int nb = rand() % 2;
-                    std::cout << nb;
-                    if(nb==0)
-                        texture_ia.loadFromFile("design/patagiraf.png");
-                    else if(nb==1)
-                        texture_ia.loadFromFile("design/corbeau.png");*/
                     ia ia_creer(texture_ia,num_choix);
                     liste_ia.push_back(ia_creer);
                     cloackSpa.restart();
@@ -340,18 +289,11 @@ void jeu::boucle(){
             click=true;
                     sprites.at(1).rotate(20);
                 }
-                /*else{
-                    sprites.at(1).setRotation(0);
-                }*/
-
            if(sf::Joystick::isConnected(0)){
                 if(sf::Joystick::isButtonPressed(0, 2)){
                     click=true;
                     sprites.at(1).rotate(20);
                 }
-
-               // else
-                    //sprites.at(1).setRotation(0);
             }
 
                     if(vie<1){
@@ -359,10 +301,9 @@ void jeu::boucle(){
                         perdu=true;
                         restart();
                     }
-            for(int y=0;y<liste_ia.size();y++){
+            for(unsigned int y=0;y<liste_ia.size();y++){
                 int pos_x = liste_ia.at(y).getPos().x/32+1;
                 int pos_y = liste_ia.at(y).getPos().y/32+2;
-                //liste_ia.at(y).deplacement(deltaTime,Window.Getlargeur());
                 if(liste_ia.at(y).colisionMethode(deltaTime,map_afficher[pos_y][pos_x-1],
                                                          map_afficher[pos_y-1][pos_x],
                                                          map_afficher[pos_y-1][pos_x-1],
@@ -379,7 +320,6 @@ void jeu::boucle(){
                                                          }
 
                                     if((sf::Joystick::isConnected(0)&&sf::Joystick::isButtonPressed(0, 2))||sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-                                      //  if(){
                                             if(joueur.attaque(liste_ia.at(y).getPos(),1)==1){
                         liste_ia.erase(liste_ia.begin()+y);
                         enemies-=1;
@@ -387,30 +327,19 @@ void jeu::boucle(){
                         texts.at(0).setString("Enemies restants : "+std::to_string(enemies));
                         texts.at(2).setString("Enemies tués : "+std::to_string(enemies_kill));
                     }
-                                       // }
                                     }
-
-             /*   if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
-                    if(joueur.attaque(liste_ia.at(y).getPos(),1)==1){
-                        liste_ia.erase(liste_ia.begin()+y);
-                        enemies-=1;
-                        enemies_kill+=1;
-                        texts.at(0).setString("Enemies restants : "+std::to_string(enemies));
-                        texts.at(2).setString("Enemies tués : "+std::to_string(enemies_kill));
-                    }*/
             }
-            for(int y=0;y<liste_nuages.size();y++){
+            for(unsigned int y=0;y<liste_nuages.size();y++){
                 liste_nuages.at(y).deplacement(deltaTime,Window.Getlargeur());
                 if(liste_nuages.at(y).test()==1){
                     soin soin_objet(texture_soin,liste_nuages.at(y).getSprite().getPosition());
                     liste_soin.push_back(soin_objet);
                 }
             }
-            for(int g=0;g<liste_soin.size();g++){
+            for(unsigned int g=0;g<liste_soin.size();g++){
                 int pos_x = liste_soin.at(g).getPos().x/32+1;
                 int pos_y = liste_soin.at(g).getPos().y/32+2;
                 liste_soin.at(g).colisionMethode(deltaTime,map_afficher[pos_y-1][pos_x-1]);
-                //std::cout << g;
                 if(liste_soin.at(g).marchedessus(joueur.getPos())==1){
                     liste_soin.erase(liste_soin.begin()+g);
                     if(vie<10)
@@ -427,10 +356,7 @@ void jeu::boucle(){
                 sprites.at(1).setPosition(joueur.getPos().x+48,joueur.getPos().y+16);
             else
                 sprites.at(1).setPosition(joueur.getPos().x-32,joueur.getPos().y+16);
-
             joueur.setTex();
-
-           // std::cout << joueur.getSens() << std::endl;
             joueur.update(deltaTime,
                           map_afficher[pos_y][pos_x-1],
                           map_afficher[pos_y+1][pos_x],
@@ -447,9 +373,6 @@ void jeu::creerSprite(sf::Texture &texture,std::string endroit,sf::Vector2f pos,
     spriteCreer.setScale(tai);
     spriteCreer.setPosition(pos);
     sprites.push_back(spriteCreer);
-    // sprites.at(sprites.size()-1).setTexture(textureDuSprite);
-    //sprites.at(sprites.size()-1).setScale(tai);
-    //sprites.at(sprites.size()-1).setPosition(pos);
 }
 
 void jeu::creerRectangle(sf::Color couleur,sf::Vector2f position,sf::Vector2f taille,float tailleContour,sf::Color couleurContour){
@@ -478,8 +401,6 @@ jeu::jeu()
     texture_soin.setSmooth(true);
     texture_nuage.loadFromFile("design/nuage.png");
     texture_nuage.setSmooth(true);
-    bufferpas.loadFromFile("audio/objet_tombe.wav");
-    soundPas.setBuffer(bufferpas);
     texture_ia.loadFromFile("design/patagiraf.png");
     texture_ia.setSmooth(true);
     texture_epee.loadFromFile("design/epee.png");

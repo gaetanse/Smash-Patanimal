@@ -31,7 +31,7 @@ class jeu
 
     private:
 
-    int num_choix=0;
+    unsigned int num_choix=0;
     bool click=false;
     int vitesse=0;
     int numero_partie;
@@ -40,10 +40,6 @@ class jeu
     sf::Texture texture_curseur;
     sf::Texture texture_epee;
     fenetre Window;
-    sf::SoundBuffer buffer;
-    sf::Sound sound;
-    sf::SoundBuffer bufferpas;
-    sf::Sound soundPas;
     std::vector<sf::RectangleShape>rectangles;
     std::vector<sf::Sprite>sprites;
     std::vector<sf::Text>texts;
@@ -72,7 +68,7 @@ class jeu
     sf::Clock cloackVul;
     perso joueur;
     int vie;
-    int enemies;
+    unsigned int enemies;
     int enemies_kill;
     bool ene_creer=false;
     sf::Texture texture_ia;
