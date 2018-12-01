@@ -18,7 +18,7 @@ Choses à faire :
 - [x] Clavier  (100%) 
 - [x] Souris (100%)
 - [x] Manette (100%)
-- [x] Parties (10%)
+- [x] Parties (100%)
 
 Jouer à la manette : 
 
