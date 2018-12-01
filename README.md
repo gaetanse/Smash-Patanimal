@@ -1,6 +1,7 @@
 # Smash-Patanimal
 
 Projet pour le Game Off 2018 par itch.io.
+
 Jeu créer en environ 900 lignes de codes.
 
 Choses à faire :
