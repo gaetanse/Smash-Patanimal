@@ -148,6 +148,31 @@ void jeu::clavier(){
         fin=true;
     }
 
+    if(sf::Joystick::isConnected(0)&&debutDuJeu==false){
+    int x = sf::Joystick::getAxisPosition(0, sf::Joystick::X);
+    if(x>0){
+            num_choix+=1;
+    }
+    else if(x==0||x==-1){
+
+    }
+    else{
+        num_choix-=1;
+    }
+
+            if(num_choix>2)
+                num_choix=0;
+            if(num_choix<0)
+                num_choix=2;
+
+            if(num_choix==0)
+                texts.at(1).setString("(Ia : Facile) | Ia : Moyen | Ia : Dur");
+            else if(num_choix==1)
+                texts.at(1).setString("Ia : Facile | (Ia : Moyen) | Ia : Dur");
+            else if(num_choix==2)
+                texts.at(1).setString("Ia : Facile | Ia : Moyen | (Ia : Dur)");
+}
+
     if (event.type == sf::Event::KeyPressed){
         if(event.key.code == sf::Keyboard::Escape)
             fin=true;
@@ -159,6 +184,35 @@ void jeu::clavier(){
         if((event.key.code == sf::Keyboard::Q||event.key.code == sf::Keyboard::D)&&debutDuJeu){
             soundPas.play();
             soundPas.setLoop(true);
+        }
+
+        if(event.key.code == sf::Keyboard::Q&&debutDuJeu==false){
+            num_choix-=1;
+            if(num_choix>2)
+                num_choix=0;
+            if(num_choix<0)
+                num_choix=2;
+
+            if(num_choix==0)
+                texts.at(1).setString("(Ia : Facile) | Ia : Moyen | Ia : Dur");
+            else if(num_choix==1)
+                texts.at(1).setString("Ia : Facile | (Ia : Moyen) | Ia : Dur");
+            else if(num_choix==2)
+                texts.at(1).setString("Ia : Facile | Ia : Moyen | (Ia : Dur)");
+        }
+        if(event.key.code == sf::Keyboard::D&&debutDuJeu==false){
+            num_choix+=1;
+            if(num_choix>2)
+                num_choix=0;
+            if(num_choix<0)
+                num_choix=2;
+
+            if(num_choix==0)
+                texts.at(1).setString("(Ia : Facile) | Ia : Moyen | Ia : Dur");
+            else if(num_choix==1)
+                texts.at(1).setString("Ia : Facile | (Ia : Moyen) | Ia : Dur");
+            else if(num_choix==2)
+                texts.at(1).setString("Ia : Facile | Ia : Moyen | (Ia : Dur)");
         }
         if(event.key.code == sf::Keyboard::Enter&&debutDuJeu==false){
             debutDuJeu=true;
@@ -254,14 +308,21 @@ void jeu::boucle(){
     }
     if(ene_creer==false&&demmarage==false){
             if(liste_ia.size()!=enemies){
-                if(deltaTimeSpa>3){
+                int obtn=0;
+                if(num_choix==0)
+                    obtn=3.1;
+                else if(num_choix==1)
+                    obtn=2.1;
+                else if(num_choix==2)
+                    obtn=1.1;
+                if(deltaTimeSpa>obtn){
                    /* int nb = rand() % 2;
                     std::cout << nb;
                     if(nb==0)
                         texture_ia.loadFromFile("design/patagiraf.png");
                     else if(nb==1)
                         texture_ia.loadFromFile("design/corbeau.png");*/
-                    ia ia_creer(texture_ia);
+                    ia ia_creer(texture_ia,num_choix);
                     liste_ia.push_back(ia_creer);
                     cloackSpa.restart();
                 }
@@ -363,9 +424,9 @@ void jeu::boucle(){
 
             joueur.colisionMethode();
             if(joueur.getSens())
-                sprites.at(1).setPosition(joueur.getPos().x+64,joueur.getPos().y+32);
+                sprites.at(1).setPosition(joueur.getPos().x+48,joueur.getPos().y+16);
             else
-                sprites.at(1).setPosition(joueur.getPos().x-64,joueur.getPos().y+32);
+                sprites.at(1).setPosition(joueur.getPos().x-32,joueur.getPos().y+16);
 
             joueur.setTex();
 
@@ -428,8 +489,8 @@ jeu::jeu()
     jeuCamera.reset(sf::FloatRect(0, 0, 1280, 640));
     creerRectangle(sf::Color::Red,sf::Vector2f(0,0),sf::Vector2f(Window.Getlargeur(),64),1,sf::Color::Black);
     creerRectangle(sf::Color::Red,sf::Vector2f(0,Window.Gethauteur()-64),sf::Vector2f(Window.Getlargeur(),64),1,sf::Color::Black);
-    creerTexte(30,sf::Color::Black,"Entrer pour jouer !",sf::Vector2f(Window.Getlargeur()/2.35,Window.Gethauteur()/70));
-    creerTexte(30,sf::Color::Black,"Echap pour quitter !",sf::Vector2f(Window.Getlargeur()/2.35,Window.Gethauteur()/1.05));
+    creerTexte(30,sf::Color::Black,"Echap pour quitter ! Entrer pour jouer !",sf::Vector2f(Window.Getlargeur()/3,Window.Gethauteur()/70));
+    creerTexte(30,sf::Color::Black,"(Ia : Facile) | Ia : Moyen | Ia : Dur",sf::Vector2f(Window.Getlargeur()/2.8,Window.Gethauteur()/1.05));
     boucle();
 }
 

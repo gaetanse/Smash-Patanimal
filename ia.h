@@ -7,7 +7,7 @@
 class ia
 {
     public:
-        ia(sf::Texture &tex_copie);
+        ia(sf::Texture &tex_copie,int difficulte);
         virtual ~ia();
         void deplacement(float temps,float tailleEcran);
         void afficher(sf::RenderWindow &window);
@@ -17,6 +17,7 @@ class ia
         bool getSens();
 
     private:
+        int diff=0;
         sf::Sprite sprite;
         sf::Texture texture;
         bool sens=true;

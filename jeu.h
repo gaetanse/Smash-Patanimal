@@ -31,6 +31,7 @@ class jeu
 
     private:
 
+    int num_choix=0;
     bool click=false;
     int vitesse=0;
     int numero_partie;

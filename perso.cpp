@@ -63,9 +63,10 @@ sf::Vector2f perso::getPos(){
 
 void perso::sefaisfrappe(bool sensfrappe,int num_pos_g,int num_pos_d){
 
-if(sensfrappe)
+if(sensfrappe){
    if(num_pos_g==1)
         sprite.move(32,0);
+}
 else
    if(num_pos_d==1)
         sprite.move(-32,0);
@@ -176,7 +177,7 @@ perso::perso()
     sprite.setTexture(texture);
     spawn_ale();
     sprite.setScale(sf::Vector2f(0.0625*2*2*2,0.0625*4*2*2));
-    speed=100;
+    speed=200;
     sprite.setTextureRect(perso_anim);
 }
 
