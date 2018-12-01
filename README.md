@@ -9,7 +9,7 @@ Choses à faire :
 - [x] Colisions (100%)
 - [x] Joueur (100%)
 - [x] Graphique (100%)
-- [x] Audio (80%)
+- [x] Audio (100%)
 - [x] Menu (100%)
 - [x] Clavier  (100%) 
 - [x] Souris (100%)
@@ -30,6 +30,9 @@ Echap : Quitter
 Click gauche : Attaquer
 
 Menu :
+
 ![Screenshot](screenshot.png)
+
 En jeu :
+
 ![Screenshot](screenshotGame.png)
