@@ -8,11 +8,12 @@ soin::soin(sf::Texture &texture,sf::Vector2f position)
 }
 
 int soin::marchedessus(sf::Vector2f personnage){
-if(personnage.x-sprite.getPosition().x>0&&personnage.x-sprite.getPosition().x<11){
-    if(personnage.y-sprite.getPosition().y>0&&personnage.y-sprite.getPosition().y<11){
+if(sprite.getPosition().x-personnage.x>-16&&sprite.getPosition().x-personnage.x<16){
+    if(sprite.getPosition().y-personnage.y>0&&sprite.getPosition().y-personnage.y<128){
         return 1;
     }
 }
+//std::cout << "/" << personnage.y << "/" << sprite.getPosition().y << "/" << personnage.x-sprite.getPosition().y << "/" << std::endl;
 }
 
 sf::Vector2f soin::getPos(){
@@ -22,7 +23,7 @@ sf::Vector2f soin::getPos(){
 void soin::colisionMethode(float temps,int block_dessous){
 sf::Vector2f mouvements(0,0);
 int vitesse=100;
-if(block_dessous==1){
+if(block_dessous==1||block_dessous==5){
     mouvements.y += vitesse * temps;
 }
 sprite.move(mouvements);

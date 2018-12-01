@@ -26,14 +26,17 @@ class jeu
         void manette();
         void affichage_map();
         void restart();
+        void continu();
         void demarageF();
 
     private:
 
+    int vitesse=0;
     int numero_partie;
     sf::Texture texture_soin;
     sf::Texture texture_nuage;
     sf::Texture texture_curseur;
+    sf::Texture texture_epee;
     fenetre Window;
     sf::SoundBuffer buffer;
     sf::Sound sound;
@@ -63,6 +66,8 @@ class jeu
     sf::Clock cloackDem;
     float deltaTimeSpa;
     sf::Clock cloackSpa;
+    float deltaTimeVul;
+    sf::Clock cloackVul;
     perso joueur;
     int vie;
     int enemies;

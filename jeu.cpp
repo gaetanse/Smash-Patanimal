@@ -2,6 +2,8 @@
 #include "librairies.h"
 #include <iostream>
 #include <string>
+#include <stdlib.h>
+#include <time.h>
 
 #define TILE_SIZE 32
 #define nbDitems 10
@@ -14,6 +16,7 @@ unsigned int map_afficher[20][40] = {
                             {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
                             {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
                             {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
+                            {0,1,5,5,5,5,5,5,1,5,5,5,5,5,1,5,5,5,1,1,1,5,5,5,1,5,5,5,5,5,1,5,5,5,5,5,5,5,1,0},
                             {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
                             {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
                             {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
@@ -23,8 +26,7 @@ unsigned int map_afficher[20][40] = {
                             {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
                             {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
                             {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
-                            {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,6,1,1,1,1,1,1,1,0},
-                            {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,5,5,1,6,1,1,1,1,1,1,0},
+                            {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
                             {2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
                             {3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3}
                             };
@@ -69,6 +71,9 @@ for(int x=0;x<liste_soin.size();x++)
     Window.RenderW().draw(liste_soin.at(x).getSprite());
 for(int t=0;t<liste_ia.size();t++)
     Window.RenderW().draw(liste_ia.at(t).getSprite());
+
+Window.RenderW().draw(sprites.at(1));
+
 }
 
 Window.RenderW().setView(Window.RenderW().getDefaultView());
@@ -79,14 +84,14 @@ for(unsigned int b=0;b<rectangles.size();b++)
 for(unsigned int a=0;a<texts.size();a++)
     Window.RenderW().draw(texts.at(a));
 
-if(vie>1){
+if(vie>0&&demmarage==false){
 for(unsigned int c=0;c<sprites.size();c++)
-    if(c!=1)
+    if(c!=2&&c!=1)
         Window.RenderW().draw(sprites.at(c));
     else
     for(unsigned int d=0;d<vie;d++){
-        sprites.at(1).setPosition(128+64*d,6+16);
-        Window.RenderW().draw(sprites.at(1));
+        sprites.at(2).setPosition(128+64*d,6+16);
+        Window.RenderW().draw(sprites.at(2));
     }
 }
 
@@ -100,10 +105,12 @@ Window.RenderW().display();
 }
 
 void jeu::souris(){
-    if (event.type == sf::Event::MouseMoved&&debutDuJeu){
+    if(debutDuJeu){
+    if (event.type == sf::Event::MouseMoved){
         float sourispos_x =  event.mouseMove.x;
         float sourispos_y =  event.mouseMove.y;
         sprites.at(0).setPosition(sourispos_x,sourispos_y);
+    }
     }
 }
 
@@ -112,11 +119,34 @@ void jeu::manette(){
 }
 
 void jeu::clavier(){
+    if(sf::Joystick::isConnected(0)&&sf::Joystick::isButtonPressed(0, 7)&&debutDuJeu==false){
+        debutDuJeu=true;
+            rectangles.clear();
+            texts.clear();
+            vie = 5;
+            texture_curseur.loadFromFile("design/curseur.png");
+            texture_curseur.setSmooth(true);
+            creerSprite(texture_curseur,"design/curseur.png",sf::Vector2f(0,0),sf::Vector2f(0.50,0.50));
+            creerSprite(texture_epee,"",sf::Vector2f(0,0),sf::Vector2f(0.5,1.5));
+            sprites.at(1).setOrigin(8,32);
+            textureDuSprite.loadFromFile("design/vie.png");
+            creerSprite(textureDuSprite,"design/vie.png",sf::Vector2f(65+16,6+16),sf::Vector2f(1,1));
+            numero_partie=0;enemies=0;enemies_kill=0;
+            creerRectangle(sf::Color::Transparent,sf::Vector2f(64,5),sf::Vector2f(Window.Getlargeur()-128,64),3,sf::Color::Black);
+            creerTexte(20,sf::Color::Black,"Enemies restants : "+std::to_string(enemies),sf::Vector2f(Window.Getlargeur()/2.2,Window.Gethauteur()/50));
+            creerTexte(20,sf::Color::Black,"Partie numéro : "+std::to_string(numero_partie),sf::Vector2f(Window.Getlargeur()/1.5,Window.Gethauteur()/50));
+            creerTexte(20,sf::Color::Black,"Enemies tués : "+std::to_string(enemies_kill),sf::Vector2f(Window.Getlargeur()/1.2,Window.Gethauteur()/50));
+            //creerRectangle(sf::Color::Transparent,sf::Vector2f(Window.Getlargeur()/2.3,Window.Gethauteur()/2),sf::Vector2f(280,128),3,sf::Color::Black);
+            //creerTexte(20,sf::Color::Black,"Partie numéro :  : 1",sf::Vector2f(Window.Getlargeur()/2.2,Window.Gethauteur()/1.85));
+            cloackDem.restart();
+    }
+    if(sf::Joystick::isConnected(0)&&sf::Joystick::isButtonPressed(0, 6)){
+        fin=true;
+    }
+
     if (event.type == sf::Event::KeyPressed){
         if(event.key.code == sf::Keyboard::Escape)
             fin=true;
-        if(event.key.code == sf::Keyboard::O)
-            vie-=1;
         if((event.key.code == sf::Keyboard::Q||event.key.code == sf::Keyboard::D)&&debutDuJeu){
             soundPas.play();
             soundPas.setLoop(true);
@@ -129,16 +159,17 @@ void jeu::clavier(){
             texture_curseur.loadFromFile("design/curseur.png");
             texture_curseur.setSmooth(true);
             creerSprite(texture_curseur,"design/curseur.png",sf::Vector2f(0,0),sf::Vector2f(0.50,0.50));
+            creerSprite(texture_epee,"",sf::Vector2f(0,0),sf::Vector2f(0.5,1.5));
+            sprites.at(1).setOrigin(8,32);
             textureDuSprite.loadFromFile("design/vie.png");
             creerSprite(textureDuSprite,"design/vie.png",sf::Vector2f(65+16,6+16),sf::Vector2f(1,1));
-            //textureDuSprite.loadFromFile("design/curseur.png");
             numero_partie=0;enemies=0;enemies_kill=0;
             creerRectangle(sf::Color::Transparent,sf::Vector2f(64,5),sf::Vector2f(Window.Getlargeur()-128,64),3,sf::Color::Black);
             creerTexte(20,sf::Color::Black,"Enemies restants : "+std::to_string(enemies),sf::Vector2f(Window.Getlargeur()/2.2,Window.Gethauteur()/50));
             creerTexte(20,sf::Color::Black,"Partie numéro : "+std::to_string(numero_partie),sf::Vector2f(Window.Getlargeur()/1.5,Window.Gethauteur()/50));
             creerTexte(20,sf::Color::Black,"Enemies tués : "+std::to_string(enemies_kill),sf::Vector2f(Window.Getlargeur()/1.2,Window.Gethauteur()/50));
-            creerRectangle(sf::Color::Transparent,sf::Vector2f(Window.Getlargeur()/2.3,Window.Gethauteur()/2),sf::Vector2f(280,128),3,sf::Color::Black);
-            creerTexte(20,sf::Color::Black,"Partie numéro :  : 1",sf::Vector2f(Window.Getlargeur()/2.2,Window.Gethauteur()/1.85));
+            //creerRectangle(sf::Color::Transparent,sf::Vector2f(Window.Getlargeur()/2.3,Window.Gethauteur()/2),sf::Vector2f(280,128),3,sf::Color::Black);
+            //creerTexte(20,sf::Color::Black,"Partie numéro :  : 1",sf::Vector2f(Window.Getlargeur()/2.2,Window.Gethauteur()/1.85));
             cloackDem.restart();
         }
     }
@@ -153,10 +184,10 @@ void jeu::demarageF(){
                 nuage nume1(texture_nuage,(a*64)+128+(a*110));
                 liste_nuages.push_back(nume1);
             }
-            texts.erase(texts.end()+0);
-            rectangles.erase(rectangles.end()+0);
+       //     texts.erase(texts.end()+0);
+       //     rectangles.erase(rectangles.end()+0);
             joueur.spawn_ale();
-            enemies+=5;
+            enemies=5+enemies_kill;
             texts.at(0).setString("Enemies restants : "+std::to_string(enemies));
             numero_partie+=1;
             texts.at(1).setString("Partie numéro : "+std::to_string(numero_partie));
@@ -174,19 +205,31 @@ numero_partie=0;
 texts.at(1).setString("Partie numéro : "+std::to_string(numero_partie));
 enemies_kill=0;
 texts.at(2).setString("Enemies tués : 0");
-//perdu=false;
 cloackDem.restart();
 demmarage=true;
 perdu=false;
-creerRectangle(sf::Color::Transparent,sf::Vector2f(Window.Getlargeur()/2.3,Window.Gethauteur()/2),sf::Vector2f(280,128),3,sf::Color::Black);
-creerTexte(20,sf::Color::Black,"Partie numéro :  : 1",sf::Vector2f(Window.Getlargeur()/2.2,Window.Gethauteur()/1.85));
+//creerRectangle(sf::Color::Transparent,sf::Vector2f(Window.Getlargeur()/2.3,Window.Gethauteur()/2),sf::Vector2f(280,128),3,sf::Color::Black);
+//creerTexte(20,sf::Color::Black,"Partie numéro :  : 1",sf::Vector2f(Window.Getlargeur()/2.2,Window.Gethauteur()/1.85));
+}
+
+void jeu::continu(){
+liste_nuages.clear();
+liste_soin.clear();
+liste_ia.clear();
+cloackDem.restart();
+demmarage=true;
+perdu=false;
+//creerRectangle(sf::Color::Transparent,sf::Vector2f(Window.Getlargeur()/2.3,Window.Gethauteur()/2),sf::Vector2f(280,128),3,sf::Color::Black);
+//creerTexte(20,sf::Color::Black,"Partie numéro : "+std::to_string(numero_partie),sf::Vector2f(Window.Getlargeur()/2.2,Window.Gethauteur()/1.85));
+demarageF();
 }
 
 void jeu::boucle(){
     while(!fin){
+    sf::Joystick::update();
     deltaTime = cloack2.restart().asSeconds();
     deltaTimeSpa = cloackSpa.getElapsedTime().asSeconds();
-
+    deltaTimeVul= cloackVul.getElapsedTime().asSeconds();
         while (Window.RenderW().pollEvent(event)){
             clavier();
             souris();
@@ -203,6 +246,12 @@ void jeu::boucle(){
     if(ene_creer==false&&demmarage==false){
             if(liste_ia.size()!=enemies){
                 if(deltaTimeSpa>3){
+                   /* int nb = rand() % 2;
+                    std::cout << nb;
+                    if(nb==0)
+                        texture_ia.loadFromFile("design/patagiraf.png");
+                    else if(nb==1)
+                        texture_ia.loadFromFile("design/corbeau.png");*/
                     ia ia_creer(texture_ia);
                     liste_ia.push_back(ia_creer);
                     cloackSpa.restart();
@@ -212,6 +261,23 @@ void jeu::boucle(){
                 ene_creer=true;
             }
     }
+    if(enemies<1){
+        continu();
+    }
+    if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+                    sprites.at(1).rotate(20);
+                }
+                /*else{
+                    sprites.at(1).setRotation(0);
+                }*/
+
+           if(sf::Joystick::isConnected(0)){
+                if(sf::Joystick::isButtonPressed(0, 7))
+                    sprites.at(1).rotate(20);
+               // else
+                    //sprites.at(1).setRotation(0);
+            }
+
                     if(vie<1){
                         vie=5;
                         perdu=true;
@@ -220,15 +286,42 @@ void jeu::boucle(){
             for(int y=0;y<liste_ia.size();y++){
                 int pos_x = liste_ia.at(y).getPos().x/32+1;
                 int pos_y = liste_ia.at(y).getPos().y/32+2;
-                liste_ia.at(y).deplacement(deltaTime,Window.Getlargeur());
+                //liste_ia.at(y).deplacement(deltaTime,Window.Getlargeur());
                 if(liste_ia.at(y).colisionMethode(deltaTime,map_afficher[pos_y][pos_x-1],
                                                          map_afficher[pos_y-1][pos_x],
                                                          map_afficher[pos_y-1][pos_x-1],
                                                          joueur.getPos(),
                                                          joueur.getSaut()
                                                             )==1){
-                    vie-=1;
-                                                         };
+                    if(deltaTimeVul>1){
+                        vie-=1;
+                        joueur.sefaisfrappe(liste_ia.at(y).getSens(),map_afficher[pos_y-1][pos_x], map_afficher[pos_y-1][pos_x-1]);
+                        cloackVul.restart();
+                    }
+
+
+                                                         }
+
+                                    if((sf::Joystick::isConnected(0)&&sf::Joystick::isButtonPressed(0, 1))||sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+                                      //  if(){
+                                            if(joueur.attaque(liste_ia.at(y).getPos(),1)==1){
+                        liste_ia.erase(liste_ia.begin()+y);
+                        enemies-=1;
+                        enemies_kill+=1;
+                        texts.at(0).setString("Enemies restants : "+std::to_string(enemies));
+                        texts.at(2).setString("Enemies tués : "+std::to_string(enemies_kill));
+                    }
+                                       // }
+                                    }
+
+             /*   if(sf::Mouse::isButtonPressed(sf::Mouse::Left))
+                    if(joueur.attaque(liste_ia.at(y).getPos(),1)==1){
+                        liste_ia.erase(liste_ia.begin()+y);
+                        enemies-=1;
+                        enemies_kill+=1;
+                        texts.at(0).setString("Enemies restants : "+std::to_string(enemies));
+                        texts.at(2).setString("Enemies tués : "+std::to_string(enemies_kill));
+                    }*/
             }
             for(int y=0;y<liste_nuages.size();y++){
                 liste_nuages.at(y).deplacement(deltaTime,Window.Getlargeur());
@@ -241,6 +334,7 @@ void jeu::boucle(){
                 int pos_x = liste_soin.at(g).getPos().x/32+1;
                 int pos_y = liste_soin.at(g).getPos().y/32+2;
                 liste_soin.at(g).colisionMethode(deltaTime,map_afficher[pos_y-1][pos_x-1]);
+                std::cout << g;
                 if(liste_soin.at(g).marchedessus(joueur.getPos())==1){
                     liste_soin.erase(liste_soin.begin()+g);
                     if(vie<10)
@@ -249,7 +343,18 @@ void jeu::boucle(){
             }
             int pos_x = joueur.getPos().x/32+1;
             int pos_y = joueur.getPos().y/32+2;
+            if(joueur.getPos().y<0||joueur.getPos().x<0)
+                joueur.reset();
+
             joueur.colisionMethode();
+            if(joueur.getSens())
+                sprites.at(1).setPosition(joueur.getPos().x+64,joueur.getPos().y+32);
+            else
+                sprites.at(1).setPosition(joueur.getPos().x-64,joueur.getPos().y+32);
+
+            joueur.setTex();
+
+           // std::cout << joueur.getSens() << std::endl;
             joueur.update(deltaTime,
                           map_afficher[pos_y][pos_x-1],
                           map_afficher[pos_y+1][pos_x],
@@ -257,8 +362,6 @@ void jeu::boucle(){
                           map_afficher[pos_y-1][pos_x-1]);
         }
         affichage();
-        //sf::Image test = Window.RenderW().capture();
-        //test.saveToFile("screenshotGame.png");
     }
 }
 
@@ -292,12 +395,11 @@ jeu::jeu()
     Window.RenderW().setFramerateLimit(60);
     Window.RenderW().setMouseCursorVisible(false);
     font.loadFromFile("font/base.ttf");
-
        if(!tileSet1Texture.loadFromFile("design/tileset.png"))
         std::cout << "Erreur durant le chargement de l'image du tileset." << std::endl;
     else
         tileSet1.setTexture(tileSet1Texture);
-
+    srand(time(NULL));
     texture_soin.loadFromFile("design/soin.png");
     texture_soin.setSmooth(true);
     texture_nuage.loadFromFile("design/nuage.png");
@@ -306,6 +408,8 @@ jeu::jeu()
     soundPas.setBuffer(bufferpas);
     texture_ia.loadFromFile("design/patagiraf.png");
     texture_ia.setSmooth(true);
+    texture_epee.loadFromFile("design/epee.png");
+    texture_epee.setSmooth(true);
     jeuCamera.reset(sf::FloatRect(0, 0, 1280, 640));
     creerRectangle(sf::Color::Red,sf::Vector2f(0,0),sf::Vector2f(Window.Getlargeur(),64),1,sf::Color::Black);
     creerRectangle(sf::Color::Red,sf::Vector2f(0,Window.Gethauteur()-64),sf::Vector2f(Window.Getlargeur(),64),1,sf::Color::Black);

@@ -16,6 +16,11 @@ class perso
         sf::Vector2f getPos();
         void spawn_ale();
         bool getSaut();
+        bool getSens();
+        void sefaisfrappe(bool sensfrappe,int num_pos_g,int num_pos_d);
+        void setTex();
+        int attaque(sf::Vector2f enemie,bool attakoupas);
+        void reset();
 
     protected:
 
@@ -42,6 +47,7 @@ class perso
         bool peut_sauter;
 
         char sensDeMarche;
+        bool sens=true;
 };
 
 #endif // PERSO_H

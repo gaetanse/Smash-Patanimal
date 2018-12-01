@@ -12,6 +12,8 @@ ia::ia(sf::Texture &tex_copie)
     sprite.setScale(0.0625*2,0.0625*4);
 }
 
+bool ia::getSens(){return sens;}
+
 sf::Vector2f ia::getPos(){
     return sprite.getPosition();
 }
@@ -24,20 +26,31 @@ if(block_dessous==1){
 }
 if(block_dessous!=1&&saut){
 if(joueur.x-sprite.getPosition().x<0){
+    sens=false;
     if(gau==1)
         mouvements.x -= vitesse * temps;
 }
 else{
+    sens=true;
     if(dro==1)
         mouvements.x += vitesse * temps;
 }
 }
 sprite.move(mouvements);
-if(joueur.x-sprite.getPosition().x>0&&joueur.x-sprite.getPosition().x<1){
-    if(joueur.y-sprite.getPosition().y>0&&joueur.y-sprite.getPosition().y<1){
-        return 1;
+
+if(sprite.getPosition().y-joueur.y>-64&&sprite.getPosition().y-joueur.y<64){
+    if(getSens()){
+        if(sprite.getPosition().x-joueur.x>-80&&sprite.getPosition().x-joueur.x<0){
+            return 1;
+        }
+    }
+    else{
+        if(sprite.getPosition().x-joueur.x>0&&sprite.getPosition().x-joueur.x<80){
+            return 1;
+        }
     }
 }
+//std::cout << "/" << joueur.x << "/" << sprite.getPosition().x << "/" << sprite.getPosition().y-joueur.x << "/" << std::endl;
 }
 
 void ia::deplacement(float temps,float tailleEcran){
